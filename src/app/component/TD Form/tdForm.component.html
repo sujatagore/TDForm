@@ -1,0 +1,135 @@
+
+<div class="row mb-2">
+    <div class="col-md-8 offset-md-2">
+        <div class="card bg-light">
+            <div class="card-body">
+                <form #signUp="ngForm" (ngSubmit)="onSignUp()">
+                    <div class="form-group">
+                        <label for="username">UserName*</label>
+                        <input type="text" 
+                            class="form-control" 
+                            required 
+                            pattern="[a-zA-Z]+"
+                            id="username" 
+                            name="username" 
+                            ngModel
+                            #username="ngModel"
+                            minlength="4"
+                            maxlength="8">
+
+                        <span class="text-danger"
+                            *ngIf="username.invalid && username.touched && username.hasError('required')">
+                            UserName is required!!!!
+                        </span>
+
+                        <ng-container *ngIf="username.dirty">
+                            <span class="text-danger"
+                                *ngIf="username.hasError('minlength')">
+                                Minimum length of UserName should be {{username.errors?.['minlength'].requiredLength}}
+                                and actual length is {{username.errors?.['minlength'].actualLength}}
+                            </span>
+
+                            <span class="text-danger"
+                                *ngIf="username.hasError('pattern')">
+                                UserName should not includes Special Character and Number!!!!
+                            </span>
+                        </ng-container>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email*</label>
+                        <input type="text" 
+                            class="form-control" 
+                            required 
+                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                            id="email" 
+                            name="email" 
+                            ngModel
+                            #email="ngModel">
+                        <span class="text-danger"
+                            *ngIf="email.touched && email.hasError('required')">
+                            Email ID is required!!!!
+                        </span>
+
+                        <span class="text-danger"
+                            *ngIf="email.dirty && email.hasError('pattern')">
+                            Invalid Email ID!!!!
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Contact</label>
+                        <input type="text" class="form-control"  id="contact" name="contact" ngModel>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="secretquestion">Secret Question*</label>
+                        <select name="secretquestion" 
+                                required 
+                                id="secretquestion" 
+                                class="form-control" 
+                                ngModel
+                                #secretquestion="ngModel">
+                            <option value="favouriteBook">Favourite Book</option>
+                            <option value="favouritePlace">Favourite Place</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="answer">Answer</label>
+                        <input type="text" 
+                                class="form-control" 
+                                required id="answer" 
+                                name="answer" 
+                                ngModel
+                                #answer="ngModel">
+                            <span class="text-danger"
+                                *ngIf="answer.touched && answer.hasError('required')">
+                                Answer is required!!!!
+                            </span>
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label class="mr-4">Gender</label>
+                            <label class="radio mr-3">
+                            <input type="radio" name="gender" value="male" id="gen" ngModel>
+                                Male
+                            </label>
+
+                            <label class="radio">
+                            <input type="radio" name="gender" value="female" id="gen" ngModel>
+                                Female
+                            </label>
+                    </div> -->
+
+                    <div class="form-group">Gender :-
+                        <div class="ml-5" *ngFor="let gend of gender">    
+                            <label [for]="gend.gen">
+                                <input type="radio" [value]="gend.gen" name="gender" [id]="gend.id" ngModel>
+                                {{gend.gen}}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox">
+                            <input type="checkbox" 
+                            name="isAccept" 
+                            required
+                            ngModel
+                            #checkbox="ngModel"> Accept Terms & Conditions
+                        </label>
+                        <span class="text-danger"
+                            *ngIf="checkbox.touched && checkbox.hasError('required')">
+                                Is required!!!!
+                        </span>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-success btn-block" [disabled]="signUp.invalid">Sign Up</button>
+
+                    <button type="button" class="btn btn-outline-info btn-block" (click)="onEdit()">Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
